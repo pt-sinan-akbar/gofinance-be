@@ -81,7 +81,7 @@ func main() {
 	router := server.Group("/api/v1")
 
 	CategoryRouterController.CategoryRouter(router)
-
+	//branch init
 	server.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	log.Fatal(server.Run("127.0.0.1:" + initializers.ConfigSetting.ServerPort))
