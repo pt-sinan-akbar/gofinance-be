@@ -1,0 +1,182 @@
+basePath: /api/v1
+definitions:
+  entities.Category:
+    properties:
+      avatar:
+        type: string
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  helpers.ErrResponse:
+    properties:
+      message:
+        type: string
+    type: object
+externalDocs:
+  description: OpenAPI
+  url: https://swagger.io/resources/open-api/
+host: localhost:8080
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: Go Finance Swagger Documentation
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Go Finance API
+  version: "1.0"
+paths:
+  /categories:
+    get:
+      description: Get All Category Data
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entities.Category'
+            type: array
+        "404":
+          description: Page not found
+          schema:
+            $ref: '#/definitions/helpers.ErrResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helpers.ErrResponse'
+      summary: Get All Category Data
+      tags:
+      - categories
+    post:
+      consumes:
+      - application/json
+      description: Create Category
+      parameters:
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/entities.Category'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.Category'
+        "404":
+          description: Page not found
+          schema:
+            $ref: '#/definitions/helpers.ErrResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helpers.ErrResponse'
+      summary: Create Category
+      tags:
+      - categories
+  /categories/{id}:
+    delete:
+      description: Delete Category
+      parameters:
+      - description: data
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.Category'
+        "404":
+          description: Page not found
+          schema:
+            $ref: '#/definitions/helpers.ErrResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helpers.ErrResponse'
+      summary: Delete Category
+      tags:
+      - categories
+    get:
+      description: Get Category By ID
+      parameters:
+      - description: data
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.Category'
+        "404":
+          description: Page not found
+          schema:
+            $ref: '#/definitions/helpers.ErrResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helpers.ErrResponse'
+      summary: Get Category By ID
+      tags:
+      - categories
+    put:
+      consumes:
+      - application/json
+      description: Edit Category
+      parameters:
+      - description: data
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/entities.Category'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.Category'
+        "404":
+          description: Page not found
+          schema:
+            $ref: '#/definitions/helpers.ErrResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helpers.ErrResponse'
+      summary: Edit Category
+      tags:
+      - categories
+securityDefinitions:
+  BasicAuth:
+    type: basic
+swagger: "2.0"
