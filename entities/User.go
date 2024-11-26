@@ -15,4 +15,7 @@ type User struct {
 	CreatedAt 	time.Time 	`gorm:"type:timestamp" json:"created_at,omitempty"`
 	UpdatedAt 	time.Time 	`gorm:"type:timestamp" json:"updated_at,omitempty"`
 	DeletedAt 	*time.Time 	`gorm:"type:timestamp" json:"deleted_at,omitempty"`
+
+	//Has many
+	Transaction []Transaction `gorm:"foreignKey:UserId" json:"transactions,omitempty"`
 }

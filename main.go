@@ -9,7 +9,7 @@ import (
 
 	// "github.com/pt-sinan-akbar/helpers"
 	"log"
-	"github.com/pt-sinan-akbar/Services"
+	"github.com/pt-sinan-akbar/services"
 	"github.com/pt-sinan-akbar/controllers"
 	"github.com/pt-sinan-akbar/initializers"
 	"github.com/pt-sinan-akbar/routes"
@@ -42,12 +42,14 @@ var (
 
 	//Controllers
 	CategoryController controllers.CategoryController
+	SubCategoryController controllers.SubCategoryController
 
 	//Routes
 	CategoryRouterController routes.CategoryRouterControler
-
+	SubCategoryRouterController routes.SubCategoryRouterController
 	//Services
 	CategoryService services.CategoryService
+	SubCategoryService services.SubCategoryService
 )
 
 func init() {
@@ -60,12 +62,14 @@ func init() {
 
 	//Services
 	CategoryService = services.NewCategoryService(initializers.DB)
-
+	SubCategoryService = services.NewSubCategoryService(initializers.DB)
 	//Controllers
 	CategoryController = controllers.NewCategoryController(&CategoryService)
+	SubCategoryController = controllers.NewSubCategoryController(&SubCategoryService)
 
 	//Routes
 	CategoryRouterController = routes.NewCategoryRouterController(CategoryController)
+	SubCategoryRouterController = routes.NewSubCategoryRouterController(SubCategoryController)
 
 	server = gin.Default()
 }
@@ -81,6 +85,7 @@ func main() {
 	router := server.Group("/api/v1")
 
 	CategoryRouterController.CategoryRouter(router)
+	SubCategoryRouterController.SubCategoryRouter(router)
 	//branch init
 	server.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 

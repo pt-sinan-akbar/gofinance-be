@@ -233,14 +233,253 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/subcategories": {
+            "get": {
+                "description": "Get All Sub Category Data",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subcategories"
+                ],
+                "summary": "Get All Sub Category Data",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/entities.SubCategory"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Page not found",
+                        "schema": {
+                            "$ref": "#/definitions/helpers.ErrResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/helpers.ErrResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create Category",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subcategories"
+                ],
+                "summary": "Create Category",
+                "parameters": [
+                    {
+                        "description": "data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/entities.SubCategory"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/entities.SubCategory"
+                        }
+                    },
+                    "404": {
+                        "description": "Page not found",
+                        "schema": {
+                            "$ref": "#/definitions/helpers.ErrResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/helpers.ErrResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/subcategories/{id}": {
+            "get": {
+                "description": "Get Sub Category By ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subcategories"
+                ],
+                "summary": "Get Sub Category By ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "data",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/entities.SubCategory"
+                        }
+                    },
+                    "404": {
+                        "description": "Page not found",
+                        "schema": {
+                            "$ref": "#/definitions/helpers.ErrResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/helpers.ErrResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Edit Sub Category",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subcategories"
+                ],
+                "summary": "Edit Sub Category",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "data",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/entities.SubCategory"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/entities.SubCategory"
+                        }
+                    },
+                    "404": {
+                        "description": "Page not found",
+                        "schema": {
+                            "$ref": "#/definitions/helpers.ErrResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/helpers.ErrResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete Sub Category",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subcategories"
+                ],
+                "summary": "Delete Sub Category",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "data",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/entities.SubCategory"
+                        }
+                    },
+                    "404": {
+                        "description": "Page not found",
+                        "schema": {
+                            "$ref": "#/definitions/helpers.ErrResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/helpers.ErrResponse"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
         "entities.Category": {
             "type": "object",
             "properties": {
-                "avatar": {
+                "created_at": {
                     "type": "string"
+                },
+                "deleted_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "logo": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "sub_category": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/entities.SubCategory"
+                    }
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "entities.SubCategory": {
+            "type": "object",
+            "properties": {
+                "category": {
+                    "$ref": "#/definitions/entities.Category"
+                },
+                "category_id": {
+                    "type": "integer"
                 },
                 "created_at": {
                     "type": "string"
@@ -250,6 +489,9 @@ const docTemplate = `{
                 },
                 "id": {
                     "type": "integer"
+                },
+                "logo": {
+                    "type": "string"
                 },
                 "name": {
                     "type": "string"

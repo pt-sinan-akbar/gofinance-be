@@ -1,36 +1,35 @@
 package controllers
 
 import (
+	"net/http"
+	"strconv"
 	"github.com/pt-sinan-akbar/entities"
 
 	"github.com/pt-sinan-akbar/helpers"
 	"github.com/pt-sinan-akbar/services"
 
-	"net/http"
-	"strconv"
-
 	"github.com/gin-gonic/gin"
 )
 
-type CategoryController struct {
-	cs *services.CategoryService
+type SubCategoryController struct {
+	scs *services.SubCategoryService
 }
 
-func NewCategoryController(categoryService *services.CategoryService) CategoryController {
-	return CategoryController{categoryService}
+func NewSubCategoryController(subCategoryService *services.SubCategoryService) SubCategoryController {
+	return SubCategoryController{subCategoryService}
 }
 
-// GetAllCategory godoc
-// @Summary Get All Category Data
-// @Description Get All Category Data
-// @Tags categories
+// GetAllSubCategory godoc
+// @Summary Get All Sub Category Data
+// @Description Get All Sub Category Data
+// @Tags subcategories
 // @Produce json
-// @Success 200 {array} entities.Category
+// @Success 200 {array} entities.SubCategory
 // @Failure 404 {object} helpers.ErrResponse "Page not found"
 // @Failure 500 {object} helpers.ErrResponse "Internal Server Error"
-// @Router /categories [get]
-func (cc CategoryController) GetAll(c *gin.Context) {
-	obj, err := cc.cs.GetAll()
+// @Router /subcategories [get]
+func (scc SubCategoryController) GetAll(c *gin.Context) {
+	obj, err := scc.scs.GetAll()
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, helpers.ErrResponse{Message: err.Error()})
 		return
@@ -39,17 +38,17 @@ func (cc CategoryController) GetAll(c *gin.Context) {
 	c.JSON(http.StatusOK, obj)
 }
 
-// GetCategoryByID godoc
-// @Summary Get Category By ID
-// @Description Get Category By ID
-// @Tags categories
+// GetSubCategoryByID godoc
+// @Summary Get Sub Category By ID
+// @Description Get Sub Category By ID
+// @Tags subcategories
 // @Produce json
 // @Param id path int true "data"
-// @Success 200 {object} entities.Category
+// @Success 200 {object} entities.SubCategory
 // @Failure 404 {object} helpers.ErrResponse "Page not found"
 // @Failure 500 {object} helpers.ErrResponse "Internal Server Error"
-// @Router /categories/{id} [get]
-func (cc CategoryController) GetByID(c *gin.Context) {
+// @Router /subcategories/{id} [get]
+func (scc SubCategoryController) GetByID(c *gin.Context) {
 	id, err := strconv.Atoi((c.Param("id")))
 
 	if err != nil {
@@ -57,7 +56,7 @@ func (cc CategoryController) GetByID(c *gin.Context) {
 		return
 	}
 
-	obj, err := cc.cs.GetByID(id)
+	obj, err := scc.scs.GetByID(id)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, helpers.ErrResponse{Message: err.Error()})
 		return
@@ -66,25 +65,25 @@ func (cc CategoryController) GetByID(c *gin.Context) {
 	c.JSON(http.StatusOK, obj)
 }
 
-// CreateCategory godoc
+// CreateSubCategory godoc
 // @Summary Create Category
 // @Description Create Category
-// @Tags categories
+// @Tags subcategories
 // @Accept json
 // @Produce json
-// @Param data body entities.Category true "data"
-// @Success 200 {object} entities.Category
+// @Param data body entities.SubCategory true "data"
+// @Success 200 {object} entities.SubCategory
 // @Failure 404 {object} helpers.ErrResponse "Page not found"
 // @Failure 500 {object} helpers.ErrResponse "Internal Server Error"
-// @Router /categories [post]
-func (cc CategoryController) CreateAsync(c *gin.Context) {
-	var obj entities.Category
+// @Router /subcategories [post]
+func (scc SubCategoryController) CreateAsync(c *gin.Context) {
+	var obj entities.SubCategory
 	if err := c.ShouldBindJSON(&obj); err != nil {
 		c.JSON(http.StatusBadRequest, helpers.ErrResponse{Message: err.Error()})
 		return
 	}
 
-	if err := cc.cs.CreateAsync(obj); err != nil {
+	if err := scc.scs.CreateAsync(obj); err != nil {
 		c.JSON(http.StatusInternalServerError, helpers.ErrResponse{Message: err.Error()})
 		return
 	}
@@ -92,24 +91,24 @@ func (cc CategoryController) CreateAsync(c *gin.Context) {
 	c.JSON(http.StatusOK, obj)
 }
 
-// DeleteCategory godoc
-// @Summary Delete Category
-// @Description Delete Category
-// @Tags categories
-// @Produce json
+// DeleteSubCategory godoc
+// @Summary Delete Sub Category
+// @Description Delete Sub Category
+// @Tags subcategories
+// @produce json
 // @Param id path int true "data"
-// @Success 200 {object} entities.Category
+// @Success 200 {object} entities.SubCategory
 // @Failure 404 {object} helpers.ErrResponse "Page not found"
 // @Failure 500 {object} helpers.ErrResponse "Internal Server Error"
-// @Router /categories/{id} [delete]
-func (cc CategoryController) DeleteAsync(c *gin.Context) {
+// @Router /subcategories/{id} [delete]
+func (scc SubCategoryController) DeleteAsync(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		c.JSON(http.StatusBadRequest, helpers.ErrResponse{Message: err.Error()})
 		return
 	}
 
-	if err = cc.cs.DeleteAsync(id); err != nil {
+	if err = scc.scs.DeleteAsync(id); err != nil {
 		c.JSON(http.StatusInternalServerError, helpers.ErrResponse{Message: err.Error()})
 		return
 	}
@@ -117,32 +116,32 @@ func (cc CategoryController) DeleteAsync(c *gin.Context) {
 	c.JSON(http.StatusOK, helpers.ErrResponse{Message: "Successfully deleted record"})
 }
 
-// EditCategory godoc
-// @Summary Edit Category
-// @Description Edit Category
-// @Tags categories
+// EditSubCategory godoc
+// @Summary Edit Sub Category
+// @Description Edit Sub Category
+// @tags subcategories
 // @Accept json
-// @Produce json
+// @Produe json
 // @Param id path int true "data"
-// @Param data body entities.Category true "data"
-// @Success 200 {object} entities.Category
+// @Param data body entities.SubCategory true "data"
+// @Success 200 {object} entities.SubCategory
 // @Failure 404 {object} helpers.ErrResponse "Page not found"
 // @Failure 500 {object} helpers.ErrResponse "Internal Server Error"
-// @Router /categories/{id} [put]
-func (cc CategoryController) EditAsync(c *gin.Context) {
+// @Router /subcategories/{id} [put]
+func (scc SubCategoryController) EditAsync(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		c.JSON(http.StatusBadRequest, helpers.ErrResponse{Message: err.Error()})
 		return
 	}
 
-	var updatedObj entities.Category
+	var updatedObj entities.SubCategory
 	if err := c.ShouldBindJSON(&updatedObj); err != nil {
 		c.JSON(http.StatusBadRequest, helpers.ErrResponse{Message: err.Error()})
 		return
 	}
 
-	if err := cc.cs.EditAsync(id, &updatedObj); err != nil {
+	if err := scc.scs.EditAsync(id, &updatedObj); err != nil {
 		c.JSON(http.StatusInternalServerError, helpers.ErrResponse{Message: err.Error()})
 		return
 	}
