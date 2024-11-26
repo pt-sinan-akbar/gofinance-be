@@ -2,14 +2,37 @@ basePath: /api/v1
 definitions:
   entities.Category:
     properties:
-      avatar:
-        type: string
       created_at:
         type: string
       deleted_at:
         type: string
       id:
         type: integer
+      logo:
+        type: string
+      name:
+        type: string
+      sub_category:
+        items:
+          $ref: '#/definitions/entities.SubCategory'
+        type: array
+      updated_at:
+        type: string
+    type: object
+  entities.SubCategory:
+    properties:
+      category:
+        $ref: '#/definitions/entities.Category'
+      category_id:
+        type: integer
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      id:
+        type: integer
+      logo:
+        type: string
       name:
         type: string
       updated_at:
@@ -176,6 +199,143 @@ paths:
       summary: Edit Category
       tags:
       - categories
+  /subcategories:
+    get:
+      description: Get All Sub Category Data
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entities.SubCategory'
+            type: array
+        "404":
+          description: Page not found
+          schema:
+            $ref: '#/definitions/helpers.ErrResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helpers.ErrResponse'
+      summary: Get All Sub Category Data
+      tags:
+      - subcategories
+    post:
+      consumes:
+      - application/json
+      description: Create Category
+      parameters:
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/entities.SubCategory'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.SubCategory'
+        "404":
+          description: Page not found
+          schema:
+            $ref: '#/definitions/helpers.ErrResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helpers.ErrResponse'
+      summary: Create Category
+      tags:
+      - subcategories
+  /subcategories/{id}:
+    delete:
+      description: Delete Sub Category
+      parameters:
+      - description: data
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.SubCategory'
+        "404":
+          description: Page not found
+          schema:
+            $ref: '#/definitions/helpers.ErrResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helpers.ErrResponse'
+      summary: Delete Sub Category
+      tags:
+      - subcategories
+    get:
+      description: Get Sub Category By ID
+      parameters:
+      - description: data
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.SubCategory'
+        "404":
+          description: Page not found
+          schema:
+            $ref: '#/definitions/helpers.ErrResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helpers.ErrResponse'
+      summary: Get Sub Category By ID
+      tags:
+      - subcategories
+    put:
+      consumes:
+      - application/json
+      description: Edit Sub Category
+      parameters:
+      - description: data
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/entities.SubCategory'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.SubCategory'
+        "404":
+          description: Page not found
+          schema:
+            $ref: '#/definitions/helpers.ErrResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helpers.ErrResponse'
+      summary: Edit Sub Category
+      tags:
+      - subcategories
 securityDefinitions:
   BasicAuth:
     type: basic

@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/pt-sinan-akbar/Initializers"
-	"github.com/pt-sinan-akbar/Entities"
+	"github.com/pt-sinan-akbar/initializers"
+	"github.com/pt-sinan-akbar/entities"
 	"gorm.io/gorm"
 	"log"
 )
@@ -38,4 +38,3 @@ func main() {
 		fmt.Println("? Migration complete")
 	}
 }
-
